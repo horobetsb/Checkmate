@@ -24,6 +24,9 @@ const envSchema = z.object({
 
 	// Feature flags
 	STATUS_PAGE_THEMES_ENABLED: booleanCoercion.default(true),
+
+	// Proxy
+	TRUST_PROXY: z.string().default("0"),
 });
 
 export type ValidatedEnv = z.infer<typeof envSchema>;
