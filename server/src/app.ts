@@ -29,6 +29,11 @@ export const createApp = ({
 	const allowedOrigin = envSettings.clientHost;
 	const app = express();
 
+	app.set(
+		"trust proxy",
+		isNaN(Number(envSettings.trustProxy)) ? envSettings.trustProxy : Number(envSettings.trustProxy)
+	);
+
 	app.use(generalApiLimiter);
 
 	app.use(

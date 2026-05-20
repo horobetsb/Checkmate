@@ -14,6 +14,7 @@ export type EnvConfig = {
 	dbConnectionString: string;
 	dbType: DbType;
 	statusPageThemesEnabled: boolean;
+	trustProxy: string;
 };
 
 export interface ISettingsService {
@@ -40,6 +41,7 @@ export class SettingsService implements ISettingsService {
 			dbConnectionString: env.DB_CONNECTION_STRING,
 			dbType: env.DB_TYPE,
 			statusPageThemesEnabled: env.STATUS_PAGE_THEMES_ENABLED,
+			trustProxy: env.TRUST_PROXY,
 		};
 	}
 
