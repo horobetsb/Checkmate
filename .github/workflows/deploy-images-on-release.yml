@@ -28,14 +28,14 @@ jobs:
       - name: Build Client Docker image
         run: |
           docker build \
-            -t ghcr.io/bluewave-labs/checkmate-client:${{ steps.extract_tag.outputs.version }} \
+            -t ghcr.io/${{ github.repository_owner }}/checkmate-client:${{ steps.extract_tag.outputs.version }} \
             -f ./docker/dist/client.Dockerfile \
-            --label org.opencontainers.image.source=https://github.com/bluewave-labs/checkmate \
+            --label org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }} \
             .
 
       - name: Push Client Docker image
         run: |
-          docker push ghcr.io/bluewave-labs/checkmate-client:${{ steps.extract_tag.outputs.version }}
+          docker push ghcr.io/${{ github.repository_owner }}/checkmate-client:${{ steps.extract_tag.outputs.version }}
 
   docker-build-and-push-server:
     needs: docker-build-and-push-client
@@ -58,26 +58,26 @@ jobs:
       - name: Build Server Docker image
         run: |
           docker build \
-            -t ghcr.io/bluewave-labs/checkmate-backend:${{ steps.extract_tag.outputs.version }} \
+            -t ghcr.io/${{ github.repository_owner }}/checkmate-backend:${{ steps.extract_tag.outputs.version }} \
             -f ./docker/dist/server.Dockerfile \
-            --label org.opencontainers.image.source=https://github.com/bluewave-labs/checkmate \
+            --label org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }} \
             .
 
       - name: Push Server Docker image
         run: |
-          docker push ghcr.io/bluewave-labs/checkmate-backend:${{ steps.extract_tag.outputs.version }}
+          docker push ghcr.io/${{ github.repository_owner }}/checkmate-backend:${{ steps.extract_tag.outputs.version }}
 
       - name: Build Mongo Docker image
         run: |
           docker build \
-            -t ghcr.io/bluewave-labs/checkmate-mongo:${{ steps.extract_tag.outputs.version }} \
+            -t ghcr.io/${{ github.repository_owner }}/checkmate-mongo:${{ steps.extract_tag.outputs.version }} \
             -f ./docker/dist/mongoDB.Dockerfile \
-            --label org.opencontainers.image.source=https://github.com/bluewave-labs/checkmate \
+            --label org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }} \
             .
 
       - name: Push MongoDB Docker image
         run: |
-          docker push ghcr.io/bluewave-labs/checkmate-mongo:${{ steps.extract_tag.outputs.version }}
+          docker push ghcr.io/${{ github.repository_owner }}/checkmate-mongo:${{ steps.extract_tag.outputs.version }}
 
   docker-build-and-push-server-mono-multiarch:
     runs-on: ubuntu-latest
@@ -109,10 +109,10 @@ jobs:
           push: true
           no-cache: true
           tags: |
-            ghcr.io/bluewave-labs/checkmate-backend-mono-multiarch:${{ steps.extract_tag.outputs.version }}
+            ghcr.io/${{ github.repository_owner }}/checkmate-backend-mono-multiarch:${{ steps.extract_tag.outputs.version }}
           platforms: linux/amd64,linux/arm64
           labels: |
-            org.opencontainers.image.source=https://github.com/bluewave-labs/checkmate
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
           build-args: |
             VITE_APP_VERSION=${{ steps.extract_tag.outputs.version }}
 
@@ -138,11 +138,11 @@ jobs:
       - name: Build Server Docker image
         run: |
           docker build \
-            -t ghcr.io/bluewave-labs/checkmate-backend-mono:${{ steps.extract_tag.outputs.version }} \
+            -t ghcr.io/${{ github.repository_owner }}/checkmate-backend-mono:${{ steps.extract_tag.outputs.version }} \
             -f ./docker/dist-mono/server.Dockerfile \
-            --label org.opencontainers.image.source=https://github.com/bluewave-labs/checkmate \
+            --label org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }} \
             --build-arg VITE_APP_VERSION=${{ steps.extract_tag.outputs.version }} \
             .
 
       - name: Push Server Docker image
-        run: docker push ghcr.io/bluewave-labs/checkmate-backend-mono:${{ steps.extract_tag.outputs.version }}
+        run: docker push ghcr.io/${{ github.repository_owner }}/checkmate-backend-mono:${{ steps.extract_tag.outputs.version }}
